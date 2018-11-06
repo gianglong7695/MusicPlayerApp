@@ -95,11 +95,12 @@ public class MainActivity extends AppCompatActivity implements PlayerListener {
         listAudio = new ArrayList<>();
 
 
-        listAudio.add(new AudioObject("https://mp3.zing.vn/xhr/media/download-source?type=audio&code=kmxHyknsJFFiFszTkyFnZntLpzZBpNECh&sig=41f41019e3881b338bdee4922f1dc012", "Vô Tình - Xesi , Hoaprox"));
-        listAudio.add(new AudioObject("https://mp3.zing.vn/xhr/media/download-source?type=audio&code=LmcmtLmaJbdmXBmtktFGLHykpzkBgHWLp&sig=9f4375527424a766025fd6fce32f696f", "Càng Níu Giữ Càng Dễ Mất - Mr Siro"));
-        listAudio.add(new AudioObject("https://mp3.zing.vn/xhr/media/download-source?type=audio&code=knxnyLHscbczQVAyktbnkHtkpzZdXHWNn&sig=7c240afc74bf1adfb14da14e2dff42e4", "Chấp Nhận - Hòa Minzy"));
-        listAudio.add(new AudioObject("https://mp3.zing.vn/xhr/media/download-source?type=audio&code=LmxHyZHaxbssQlhtLTbmZHTZpzkBhmWRg&sig=718e99a0831de4f6d74440ad62ee9073", "Em Không Thể - Tiên Tiên , Touliver"));
-        listAudio.add(new AudioObject("https://mp3.zing.vn/xhr/media/download-source?type=audio&code=LHcmyZHNJbdiNzstLTbmZnykpzZBCmCbF&sig=9c92daf472ea2e46426bd66b2921e6aa", "Hongkong1 (Official Version) - Nguyễn Trọng Tài , San Ji , Double X"));
+        listAudio.add(new AudioObject("https://vnno-zn-5-tf-mp3-s1-zmp3.zadn.vn/c9ce5f658c21657f3c30/5337160813560919543?authen=exp=1541516785~acl=/c9ce5f658c21657f3c30/*~hmac=ae49ad39bd4fe69c7e161a581193c048&filename=.mp3", "Càng Níu Giữ Càng Dễ Mất - Mr Siro"));
+        listAudio.add(new AudioObject("https://vnno-vn-6-tf-mp3-s1-zmp3.zadn.vn/8eb46f3db87951270868/6366243486279198955?authen=exp=1541514557~acl=/8eb46f3db87951270868/*~hmac=4190bdb351ad6827852c6948bbfa6a83&filename=.mp3", "Chạm Đáy Nỗi Đau - ERIK"));
+        listAudio.add(new AudioObject("https://vnno-vn-6-tf-mp3-s1-zmp3.zadn.vn/8661cfed19a9f0f7a9b8/2673128015199042442?authen=exp=1541509149~acl=/8661cfed19a9f0f7a9b8/*~hmac=f492f80deb1e0684a00ad88dd6f44c30&filename=.mp3", "Cô Gái M52 - HuyR , Tùng Viu"));
+        listAudio.add(new AudioObject("https://vnno-zn-5-tf-mp3-s1-zmp3.zadn.vn/603a21fff7bb1ee547aa/6745492230489640910?authen=exp=1541515951~acl=/603a21fff7bb1ee547aa/*~hmac=de82ec51f20c39aae47aa42398ec2fd3&filename=.mp3", "Mình Cưới Nhau Đi - Huỳnh James , Pjnboys"));
+        listAudio.add(new AudioObject("https://vnno-vn-5-tf-mp3-s1-zmp3.zadn.vn/5ee8eed13895d1cb8884/4035341797591617350?authen=exp=1541524350~acl=/5ee8eed13895d1cb8884/*~hmac=06c0de8662be86ade4c6f88a7735d86a&filename=.mp3", "Quan Trọng Là Thần Thái - OnlyC , Karik"));
+
     }
 
     @Override
