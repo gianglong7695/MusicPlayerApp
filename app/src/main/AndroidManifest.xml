@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="app.dg.giang.dgplayer">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -13,12 +12,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".MusicPlayerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <service android:name=".player.PlayService">
+            <intent-filter>
+                <action android:name="app.dg.giang.dgplayer.ACTION.PLAY_TOGGLE"/>
+                <action android:name="app.dg.giang.dgplayer.ACTION.PLAY_NEXT"/>
+                <action android:name="app.dg.giang.dgplayer.ACTION.PLAY_LAST"/>
+                <action android:name="app.dg.giang.dgplayer.ACTION.STOP_SERVICE"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

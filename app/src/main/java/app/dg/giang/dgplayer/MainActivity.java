@@ -1,7 +1,7 @@
 package app.dg.giang.dgplayer;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,20 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import app.dg.giang.auplayer.IPlayer;
-import app.dg.giang.auplayer.PlayerHolder;
-import app.dg.giang.auplayer.PlayerListener;
-
-public class MainActivity extends AppCompatActivity implements PlayerListener {
+public class MainActivity extends AppCompatActivity {
     private TextView tvUrl;
     private Button btUrl, btSource, btStop;
-    private IPlayer iPlayer;
+//    private IPlayer iPlayer;
     public static final int MEDIA_RES_ID = R.raw.thang_dien;
 
     private List<AudioObject> listAudio;
     private Random random;
 
-    private PlayerHolder playerHolder;
+//    private PlayerHolder playerHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,50 +33,50 @@ public class MainActivity extends AppCompatActivity implements PlayerListener {
         random = new Random();
 
         initData();
-        playerHolder = new PlayerHolder(this);
-        playerHolder.setPlayerListener(this);
-        iPlayer = playerHolder;
+//        playerHolder = new PlayerHolder(this);
+//        playerHolder.setPlayerListener(this);
+//        iPlayer = playerHolder;
 
 
-        btUrl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (iPlayer.isPlaying()) {
-                    iPlayer.release();
-                }
-                AudioObject audioObject = listAudio.get(random.nextInt(listAudio.size() - 1));
-                iPlayer.loadMedia(audioObject.getUrl());
-                iPlayer.play();
-
-                tvUrl.setText(audioObject.getName());
-            }
-        });
-
-
-        btSource.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (iPlayer.isPlaying()) {
-                    iPlayer.release();
-                }
-                iPlayer.loadMedia(MEDIA_RES_ID);
-                iPlayer.play();
-
-                tvUrl.setText("Thằng Điên");
-            }
-        });
+//        btUrl.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (iPlayer.isPlaying()) {
+//                    iPlayer.release();
+//                }
+//                AudioObject audioObject = listAudio.get(random.nextInt(listAudio.size() - 1));
+//                iPlayer.loadMedia(audioObject.getUrl());
+//                iPlayer.play();
+//
+//                tvUrl.setText(audioObject.getName());
+//            }
+//        });
 
 
-        btStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (iPlayer.isPlaying()) {
-                    iPlayer.pause();
-                } else {
-                    iPlayer.play();
-                }
-            }
-        });
+//        btSource.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (iPlayer.isPlaying()) {
+//                    iPlayer.release();
+//                }
+//                iPlayer.loadMedia(MEDIA_RES_ID);
+//                iPlayer.play();
+//
+//                tvUrl.setText("Thằng Điên");
+//            }
+//        });
+//
+//
+//        btStop.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (iPlayer.isPlaying()) {
+//                    iPlayer.pause();
+//                } else {
+//                    iPlayer.play();
+//                }
+//            }
+//        });
     }
 
 
@@ -103,19 +99,19 @@ public class MainActivity extends AppCompatActivity implements PlayerListener {
 
     }
 
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void pause() {
-        btStop.setText("Play");
-
-    }
-
-    @Override
-    public void play() {
-        btStop.setText("Pause");
-    }
+//    @Override
+//    public void start() {
+//
+//    }
+//
+//    @Override
+//    public void pause() {
+//        btStop.setText("Play");
+//
+//    }
+//
+//    @Override
+//    public void play() {
+//        btStop.setText("Pause");
+//    }
 }
