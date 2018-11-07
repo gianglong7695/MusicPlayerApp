@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="app.dg.giang.dgplayer">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -13,9 +13,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".MusicPlayerActivity">
@@ -29,12 +29,39 @@
 
         <service android:name=".player.PlayService">
             <intent-filter>
-                <action android:name="app.dg.giang.dgplayer.ACTION.PLAY_TOGGLE"/>
-                <action android:name="app.dg.giang.dgplayer.ACTION.PLAY_NEXT"/>
-                <action android:name="app.dg.giang.dgplayer.ACTION.PLAY_LAST"/>
-                <action android:name="app.dg.giang.dgplayer.ACTION.STOP_SERVICE"/>
+                <action android:name="app.dg.giang.dgplayer.ACTION.PLAY_TOGGLE" />
+                <action android:name="app.dg.giang.dgplayer.ACTION.PLAY_NEXT" />
+                <action android:name="app.dg.giang.dgplayer.ACTION.PLAY_LAST" />
+                <action android:name="app.dg.giang.dgplayer.ACTION.STOP_SERVICE" />
             </intent-filter>
         </service>
+
+
+        <service
+            android:name=".demo.MusicService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="app.dg.giang.dgplayer.TOGGLE_PLAYBACK" />
+                <action android:name="app.dg.giang.dgplayer.PLAY" />
+                <action android:name="app.dg.giang.dgplayer.PREVIOUS" />
+                <action android:name="app.dg.giang.dgplayer.NEXT" />
+                <action android:name="app.dg.giang.dgplayer.PAUSE" />
+                <action android:name="app.dg.giang.dgplayer.SEEK" />
+                <action android:name="app.dg.giang.dgplayer.SUPPLY_PLAYLIST" />
+                <action android:name="app.dg.giang.dgplayer.PLAY_SPECIFIC_SONG" />
+                <action android:name="app.dg.giang.dgplayer.REQUEST_STATUS" />
+                <action android:name="app.dg.giang.dgplayer.TOGGLE_REPEATMODE" />
+                <action android:name="app.dg.giang.dgplayer.TOGGLE_SHUFFLE" />
+                <action android:name="app.dg.giang.dgplayer.REORDER_PLAYLIST" />
+                <action android:name="app.dg.giang.dgplayer.SETUP_AS_FOREGROUND" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".example.AudioService">
+
+        </service>
+
     </application>
 
 </manifest>

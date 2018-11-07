@@ -5,6 +5,7 @@ import android.util.Log;
 
 public class Logs {
     public static boolean DEBUG = true;
+    public static String START_TAG = "";
 
     public Logs() {
     }
@@ -12,7 +13,7 @@ public class Logs {
     public static void d(String message) {
         StackTraceElement stackTraceElement = (new Throwable()).getStackTrace()[1];
         if (DEBUG) {
-            Log.d(stackTraceElement.getFileName() + "/" + stackTraceElement.getMethodName() +
+            Log.d(START_TAG + stackTraceElement.getFileName() + "/" + stackTraceElement.getMethodName() +
                     "/" + stackTraceElement.getLineNumber(), message);
         }
 
@@ -21,7 +22,7 @@ public class Logs {
     public static void w(String message) {
         StackTraceElement stackTraceElement = (new Throwable()).getStackTrace()[1];
         if (DEBUG) {
-            Log.w(stackTraceElement.getFileName() + "/" + stackTraceElement.getMethodName() +
+            Log.w(START_TAG + stackTraceElement.getFileName() + "/" + stackTraceElement.getMethodName() +
                     "/" + stackTraceElement.getLineNumber(), message);
         }
 
@@ -30,7 +31,7 @@ public class Logs {
     public static void i(String message) {
         StackTraceElement stackTraceElement = (new Throwable()).getStackTrace()[1];
         if (DEBUG) {
-            Log.i(stackTraceElement.getFileName() + "/" + stackTraceElement.getMethodName() +
+            Log.i(START_TAG + stackTraceElement.getFileName() + "/" + stackTraceElement.getMethodName() +
                     "/" + stackTraceElement.getLineNumber(), message);
         }
 
@@ -39,8 +40,18 @@ public class Logs {
     public static void e(String message) {
         StackTraceElement stackTraceElement = (new Throwable()).getStackTrace()[1];
         if (DEBUG) {
-            Log.e(stackTraceElement.getFileName() + "/" + stackTraceElement.getMethodName() +
+            Log.e(START_TAG + stackTraceElement.getFileName() + "/" + stackTraceElement.getMethodName() +
                     "/" + stackTraceElement.getLineNumber(), message);
+        }
+
+    }
+
+
+    public static void e(Exception e) {
+        StackTraceElement stackTraceElement = (new Throwable()).getStackTrace()[1];
+        if (DEBUG) {
+            Log.e(START_TAG + stackTraceElement.getFileName() + "/" + stackTraceElement.getMethodName() +
+                    "/" + stackTraceElement.getLineNumber(), e.toString());
         }
 
     }

@@ -1,6 +1,9 @@
 package app.dg.giang.dgplayer.player;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +20,8 @@ import app.dg.giang.dgplayer.utils.Logs;
  */
 public class Player implements MediaPlayer.OnCompletionListener, IPlayerCallback{
 
-    private static volatile Player sInstance;
+//    private static volatile Player sInstance;
+    private static Player sInstance;
 
     private MediaPlayer mPlayer;
 
@@ -29,9 +33,12 @@ public class Player implements MediaPlayer.OnCompletionListener, IPlayerCallback
     // Player status
     private boolean isPaused;
 
+    private static Context context;
 
 
-    private Player() {
+
+    public Player(Context context) {
+        this.context = context;
         mPlayer = new MediaPlayer();
         mPlayList = new PlayList();
         mPlayer.setOnCompletionListener(this);
@@ -41,7 +48,7 @@ public class Player implements MediaPlayer.OnCompletionListener, IPlayerCallback
         if (sInstance == null) {
             synchronized (Player.class) {
                 if (sInstance == null) {
-                    sInstance = new Player();
+                    sInstance = new Player(context);
                 }
             }
         }
@@ -70,11 +77,17 @@ public class Player implements MediaPlayer.OnCompletionListener, IPlayerCallback
             notifyPlayStatusChanged(true);
             return true;
         }
+
+
         if (mPlayList.prepare()) {
             Song song = mPlayList.getCurrentSong();
+
             try {
+                Uri mUri = Uri.parse(song.getPath());
                 mPlayer.reset();
-                mPlayer.setDataSource(song.getPath());
+                mPlayer.setDataSource(context, mUri);
+                mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
                 mPlayer.prepare();
                 mPlayer.start();
                 notifyPlayStatusChanged(true);

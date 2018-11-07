@@ -47,7 +47,8 @@ public class PlayService extends Service implements IPlayerCallback, ActionCallb
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+
+        return mBinder;
     }
 
 
@@ -72,6 +73,11 @@ public class PlayService extends Service implements IPlayerCallback, ActionCallb
                 stopForeground(true);
                 unregisterCallback(this);
             }
+
+
+//            Song mSong = new Song();
+//            mSong.setPath("https://vnno-zn-5-tf-mp3-s1-zmp3.zadn.vn/c9ce5f658c21657f3c30/5337160813560919543?authen=exp=1541516785~acl=/c9ce5f658c21657f3c30/*~hmac=ae49ad39bd4fe69c7e161a581193c048&filename=.mp3");
+//            play(mSong);
         }
         return START_STICKY;
     }
