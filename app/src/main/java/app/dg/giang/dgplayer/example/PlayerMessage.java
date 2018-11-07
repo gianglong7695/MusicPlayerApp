@@ -6,11 +6,11 @@ package app.dg.giang.dgplayer.example;
  * Phone: 0979 579 283
  */
 public class PlayerMessage {
-    public String path;
-    public boolean isClear;
-    public int index;
-    public IPlayer callback;
-    public long progress;
+    private String path;
+    private boolean isClear;
+    private int index;
+    private IPlayer callback;
+    private long progress;
 
     public String getPath() {
         return path;

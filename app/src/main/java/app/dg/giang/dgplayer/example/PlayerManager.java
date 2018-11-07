@@ -9,7 +9,6 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 
-import app.dg.giang.dgplayer.player.PlayerService;
 import app.dg.giang.dgplayer.utils.Logs;
 
 /**
@@ -22,13 +21,13 @@ public class PlayerManager {
     private Intent intent;
 
     private IPlayer callback;
-    private Messenger service = null;
+    private Messenger messenger = null;
     private boolean isBound;
 
 
     private ServiceConnection connection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder s) {
-            service = new Messenger(s);
+            messenger = new Messenger(s);
             isBound = true;
             if (callback != null) {
 //                setCallback(callback);
@@ -39,7 +38,7 @@ public class PlayerManager {
         }
 
         public void onServiceDisconnected(ComponentName className) {
-            service = null;
+            messenger = null;
             isBound = false;
             Logs.d("onServiceDisconnected");
 
@@ -74,7 +73,7 @@ public class PlayerManager {
     public void play(int index) {
         if (!isBound) return;
         PlayerMessage data = new PlayerMessage();
-        data.index = index;
+        data.setIndex(index);
         Message msg = Message.obtain(null, AudioService.ACTION_MEDIA_PLAY, data);
         send(msg);
     }
@@ -103,7 +102,7 @@ public class PlayerManager {
 
     private void send(Message msg) {
         try {
-            service.send(msg);
+            messenger.send(msg);
             Logs.i("Test Activity sent message: " + msg);
         } catch (RemoteException e) {
             Logs.e(e);

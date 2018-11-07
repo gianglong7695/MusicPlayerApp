@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.PowerManager;
 
 import app.dg.giang.dgplayer.utils.Logs;
 
@@ -26,6 +27,7 @@ public class PlayerHolder {
         handler = new Handler();
 
         mediaPlayer = new MediaPlayer();
+        mediaPlayer.setWakeMode(context, PowerManager.PARTIAL_WAKE_LOCK);
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
@@ -38,16 +40,11 @@ public class PlayerHolder {
     public void play(PlayerMessage playerMessage) {
         try {
             this.playerMessage = playerMessage;
-//            Uri mUri = Uri.parse(playerMessage.getPath());
-            Uri mUri = Uri.parse("https://tainhachay.biz/download-music/239579");
-
-
+            Uri mUri = Uri.parse(playerMessage.getPath());
             mediaPlayer.setDataSource(context, mUri);
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.prepare();
             mediaPlayer.start();
-
-
         } catch (Exception e) {
             Logs.e(e);
         }
