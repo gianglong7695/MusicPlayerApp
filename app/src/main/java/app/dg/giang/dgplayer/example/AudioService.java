@@ -30,7 +30,6 @@ public class AudioService extends Service implements PlayerConst{
         super.onCreate();
         messenger = new Messenger(new IncomingHandler());
         playerHolder = new PlayerHolder(getApplicationContext());
-
     }
 
 

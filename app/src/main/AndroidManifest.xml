@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="app.dg.giang.dgplayer">
 
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -12,11 +15,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".MusicPlayerActivity">
             <intent-filter>
@@ -26,7 +31,6 @@
             </intent-filter>
         </activity>
 
-
         <service android:name=".player.PlayService">
             <intent-filter>
                 <action android:name="app.dg.giang.dgplayer.ACTION.PLAY_TOGGLE" />
@@ -35,8 +39,6 @@
                 <action android:name="app.dg.giang.dgplayer.ACTION.STOP_SERVICE" />
             </intent-filter>
         </service>
-
-
         <service
             android:name=".demo.MusicService"
             android:exported="false">
@@ -56,12 +58,17 @@
                 <action android:name="app.dg.giang.dgplayer.SETUP_AS_FOREGROUND" />
             </intent-filter>
         </service>
+        <service android:name=".example.AudioService"></service>
+        <service android:name=".tutorial.MusicService" />
 
-        <service
-            android:name=".example.AudioService">
+        <activity android:name=".tutorial.LocalMusicActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-        </service>
-
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <service android:name=".tutorial.MusicService" />
     </application>
 
 </manifest>
