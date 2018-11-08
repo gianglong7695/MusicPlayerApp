@@ -141,7 +141,7 @@ public class LocalMusicActivity extends AppCompatActivity implements MediaContro
 
     //user song select
     public void songPicked(View view){
-        musicSrv.setSong(Integer.parseInt(view.getTag().toString()));
+        musicSrv.setSongIndex(Integer.parseInt(view.getTag().toString()));
         musicSrv.playSong();
         if(playbackPaused){
             setController();
@@ -214,23 +214,23 @@ public class LocalMusicActivity extends AppCompatActivity implements MediaContro
 
     //set the controller up
     private void setController(){
-        controller = new MusicController(this);
-        //set previous and next button listeners
-        controller.setPrevNextListeners(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                playNext();
-            }
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                playPrev();
-            }
-        });
-        //set and show
-        controller.setMediaPlayer(this);
-        controller.setAnchorView(findViewById(R.id.song_list));
-        controller.setEnabled(true);
+//        controller = new MusicController(this);
+//        //set previous and next button listeners
+//        controller.setPrevNextListeners(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                playNext();
+//            }
+//        }, new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                playPrev();
+//            }
+//        });
+//        //set and show
+//        controller.setMediaPlayer(this);
+//        controller.setAnchorView(findViewById(R.id.song_list));
+//        controller.setEnabled(true);
     }
 
     private void playNext(){
@@ -239,7 +239,7 @@ public class LocalMusicActivity extends AppCompatActivity implements MediaContro
             setController();
             playbackPaused=false;
         }
-        controller.show(0);
+//        controller.show(0);
     }
 
     private void playPrev(){
@@ -248,7 +248,7 @@ public class LocalMusicActivity extends AppCompatActivity implements MediaContro
             setController();
             playbackPaused=false;
         }
-        controller.show(0);
+//        controller.show(0);
     }
 
     @Override
@@ -268,7 +268,7 @@ public class LocalMusicActivity extends AppCompatActivity implements MediaContro
 
     @Override
     protected void onStop() {
-        controller.hide();
+//        controller.hide();
         super.onStop();
     }
 

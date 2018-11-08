@@ -10,10 +10,10 @@ public class Song {
     private String title;
     private String patch;
 
-    public Song(long songID, String songTitle, String patch) {
-        id = songID;
-        title = songTitle;
-        patch = patch;
+    public Song(long id, String title, String patch) {
+        this.id = id;
+        this.title = title;
+        this.patch = patch;
     }
 
     public long getID() {

@@ -13,6 +13,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Random;
 
+import app.dg.giang.dgplayer.utils.Logs;
+
 /**
  * Created by Giang Long on 11/7/2018.
  * Skype: gianglong7695@gmail.com (id: gianglong7695_1)
@@ -28,31 +30,40 @@ public class MusicService extends Service implements
     //song list
     private ArrayList<Song> songs;
     //current position
-    private int songPosn;
+    private int currentSongPos;
     //binder
     private final IBinder musicBind = new MusicBinder();
     //title of current song
-    private String songTitle="";
+    private String songTitle = "";
     //notification id
-    private static final int NOTIFY_ID=1;
+    private static final int NOTIFY_ID = 1;
     //shuffle flag and random
-    private boolean shuffle=false;
+    private boolean shuffle = false;
     private Random rand;
 
-    public void onCreate(){
+    private MusicController controller;
+
+
+
+    public void onCreate() {
         //create the service
         super.onCreate();
         //initialize position
-        songPosn=0;
+        currentSongPos = 0;
         //random
-        rand=new Random();
+        rand = new Random();
         //create player
         player = new MediaPlayer();
         //initialize
         initMusicPlayer();
     }
 
-    public void initMusicPlayer(){
+
+    public void setController(MusicController controller) {
+        this.controller = controller;
+    }
+
+    public void initMusicPlayer() {
         //set player properties
         player.setWakeMode(getApplicationContext(),
                 PowerManager.PARTIAL_WAKE_LOCK);
@@ -64,8 +75,8 @@ public class MusicService extends Service implements
     }
 
     //pass song list
-    public void setList(ArrayList<Song> theSongs){
-        songs=theSongs;
+    public void setList(ArrayList<Song> theSongs) {
+        songs = theSongs;
     }
 
     //binder
@@ -82,54 +93,49 @@ public class MusicService extends Service implements
     }
 
 //    //release resources when unbind
-//    @Override
-//    public boolean onUnbind(Intent intent){
-//        player.stop();
-//        player.release();
-//        return false;
-//    }
+    @Override
+    public boolean onUnbind(Intent intent){
+        player.stop();
+        player.release();
+        return false;
+    }
 
     //play a song
-    public void playSong(){
-        //play
-        player.reset();
-        //get song
-        Song playSong = songs.get(songPosn);
-        //get title
-        songTitle=playSong.getTitle();
-        //get id
-//        long currSong = playSong.getID();
-//        //set uri
-//        Uri trackUri = ContentUris.withAppendedId(
-//                android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-//                currSong);
+    public void playSong() {
+        try {
+            //play
+            player.reset();
+            //get song
+            Song playSong = songs.get(currentSongPos);
+            //get title
+            songTitle = playSong.getTitle();
 
-
-
-
-        //set the data source
-        try{
 //            Uri mUri = Uri.parse(playSong.getPatch());
-//            Uri mUri = Uri.parse("https://mp3.zing.vn/xhr/media/download-source?type=audio&code=kmxHyLmNxFFuvaAyLTbmkmtLWSkhbdZQp&sig=240dbde515d9ca57c54687eea7307ab2");
-            Uri mUri = Uri.parse("https://mp3.zing.vn/xhr/media/download-source?type=audio&code=LmcnyQRVDisETLybHLHykQSZhFBBSG&sig=d4e017680816789311598d652c387fbc");
-            player.setDataSource(getApplicationContext(), mUri);
+//            player.setDataSource(getApplicationContext(), mUri);
+            player.setDataSource(playSong.getPatch());
             player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+            player.prepareAsync();
+
+        } catch (Exception e) {
+            Logs.e(e);
         }
-        catch(Exception e){
-            Log.e("MUSIC SERVICE", "Error setting data source", e);
+
+
+        if(controller != null){
+            controller.onMusicPlay();
         }
-        player.prepareAsync();
     }
 
     //set the song
-    public void setSong(int songIndex){
-        songPosn=songIndex;
+    public void setSongIndex(int songIndex) {
+        currentSongPos = songIndex;
     }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
         //check if playback has reached the end of a track
-        if(player.getCurrentPosition()>0){
+        if (player.getCurrentPosition() > 0) {
             mp.reset();
             playNext();
         }
@@ -137,7 +143,7 @@ public class MusicService extends Service implements
 
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
-        Log.v("MUSIC PLAYER", "Playback Error");
+        Logs.e("Playback Error");
         mp.reset();
         return false;
     }
@@ -155,59 +161,67 @@ public class MusicService extends Service implements
 //        Notification.Builder builder = new Notification.Builder(this);
 //
 //        builder.setContentIntent(pendInt)
-//                .setSmallIcon(R.drawable.play)
+//                .setSmallIcon(R.drawable.ic_play)
 //                .setTicker(songTitle)
 //                .setOngoing(true)
 //                .setContentTitle("Playing")
 //                .setContentText(songTitle);
 //        Notification not = builder.build();
 //        startForeground(NOTIFY_ID, not);
+
+
+
     }
 
     //playback methods
-    public int getPosn(){
+    public int getPosn() {
         return player.getCurrentPosition();
     }
 
-    public int getDur(){
+    public int getDur() {
         return player.getDuration();
     }
 
-    public boolean isPng(){
+    public boolean isPng() {
         return player.isPlaying();
     }
 
-    public void pausePlayer(){
+    public void pausePlayer() {
         player.pause();
+        if(controller != null){
+            controller.onMusicPause();
+        }
     }
 
-    public void seek(int posn){
+    public void seek(int posn) {
         player.seekTo(posn);
+        if(controller != null){
+            controller.seekTo(posn);
+        }
     }
 
-    public void go(){
+    public void go() {
         player.start();
     }
 
     //skip to previous track
-    public void playPrev(){
-        songPosn--;
-        if(songPosn<0) songPosn=songs.size()-1;
+    public void playPrev() {
+        currentSongPos--;
+        if (currentSongPos < 0) currentSongPos = songs.size() - 1;
         playSong();
     }
 
     //skip to next
-    public void playNext(){
-        if(shuffle){
-            int newSong = songPosn;
-            while(newSong==songPosn){
-                newSong=rand.nextInt(songs.size());
+    public void playNext() {
+        if (shuffle) {
+            int newSong = currentSongPos;
+            while (newSong == currentSongPos) {
+                newSong = rand.nextInt(songs.size());
             }
-            songPosn=newSong;
-        }
-        else{
-            songPosn++;
-            if(songPosn>=songs.size()) songPosn=0;
+            currentSongPos = newSong;
+        } else {
+            currentSongPos++;
+            if (currentSongPos >= songs.size()) currentSongPos = 0;
         }
         playSong();
     }
@@ -218,8 +232,8 @@ public class MusicService extends Service implements
     }
 
     //toggle shuffle
-    public void setShuffle(){
-        if(shuffle) shuffle=false;
-        else shuffle=true;
+    public void setShuffle() {
+        if (shuffle) shuffle = false;
+        else shuffle = true;
     }
 }
