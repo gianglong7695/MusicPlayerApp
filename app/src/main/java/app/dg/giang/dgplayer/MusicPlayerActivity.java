@@ -61,7 +61,7 @@ public class MusicPlayerActivity extends AppCompatActivity  {
                 PlayerMessage playerMessage = new PlayerMessage();
                 playerMessage.setPath("https://tainhachay.biz/download-music/239579");
                 manager.play(playerMessage);
-                
+
             }
         });
 
