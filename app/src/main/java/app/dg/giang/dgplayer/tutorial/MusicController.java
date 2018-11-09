@@ -20,6 +20,10 @@ public interface MusicController {
 
     boolean isPlaying();
 
+    void playPress();
+
+    void pausePress();
+
     int getBufferPercentage();
 
     boolean canPause();

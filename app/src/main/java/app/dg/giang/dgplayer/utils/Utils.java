@@ -1,5 +1,6 @@
 package app.dg.giang.dgplayer.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 
@@ -18,5 +19,19 @@ public class Utils {
         }
 
         return layoutManager;
+    }
+
+
+    @SuppressLint("DefaultLocale")
+    public static String formatDuration(int duration) {
+        duration /= 1000; // milliseconds into seconds
+        int minute = duration / 60;
+        int hour = minute / 60;
+        minute %= 60;
+        int second = duration % 60;
+        if (hour != 0)
+            return String.format("%2d:%02d:%02d", hour, minute, second);
+        else
+            return String.format("%02d:%02d", minute, second);
     }
 }

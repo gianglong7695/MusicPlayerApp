@@ -7,18 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-
-import app.dg.giang.dgplayer.AudioObject;
 import app.dg.giang.dgplayer.R;
-import app.dg.giang.dgplayer.example.PlayerHolder;
 import app.dg.giang.dgplayer.tutorial.OnClickListenerPosition;
 import app.dg.giang.dgplayer.tutorial.Song;
+import app.dg.giang.dgplayer.utils.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -92,8 +88,12 @@ public class PlayListAudioAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
 
         private void setData(Song song) {
+            this.song = song;
             tv_name.setText(song.getTitle());
-            view.setTag(song);
+
+            if(song.getDuration() != 0){
+                tv_time.setText(Utils.formatDuration(song.getDuration()));
+            }
 
 
             view.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +102,10 @@ public class PlayListAudioAdapter extends RecyclerView.Adapter<RecyclerView.View
                     onClickListenerPosition.onClickPosition(getAdapterPosition());
                 }
             });
+
+
+            view.setTag(song);
+
         }
 
     }
@@ -113,7 +117,6 @@ public class PlayListAudioAdapter extends RecyclerView.Adapter<RecyclerView.View
 //
 //            notifyDataSetChanged();
     }
-
 
 
 }

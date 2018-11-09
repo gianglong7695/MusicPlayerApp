@@ -26,7 +26,7 @@ public class LocalMusicActivity extends AppCompatActivity implements MediaContro
     private ListView songView;
 
     //service
-    private MusicService musicSrv;
+    private MusicService musicService;
     private Intent playIntent;
     //binding
     private boolean musicBound = false;
@@ -88,9 +88,9 @@ public class LocalMusicActivity extends AppCompatActivity implements MediaContro
         public void onServiceConnected(ComponentName name, IBinder service) {
             MusicService.MusicBinder binder = (MusicService.MusicBinder)service;
             //get service
-            musicSrv = binder.getService();
+            musicService = binder.getService();
             //pass list
-            musicSrv.setList(songList);
+            musicService.setList(songList);
             musicBound = true;
         }
 
@@ -141,8 +141,8 @@ public class LocalMusicActivity extends AppCompatActivity implements MediaContro
 
     //user song select
     public void songPicked(View view){
-        musicSrv.setSongIndex(Integer.parseInt(view.getTag().toString()));
-        musicSrv.playSong();
+        musicService.setSongIndex(Integer.parseInt(view.getTag().toString()));
+        musicService.playSong();
         if(playbackPaused){
             setController();
             playbackPaused=false;
@@ -177,39 +177,39 @@ public class LocalMusicActivity extends AppCompatActivity implements MediaContro
 
     @Override
     public int getCurrentPosition() {
-        if(musicSrv!=null && musicBound && musicSrv.isPng())
-            return musicSrv.getPosn();
+        if(musicService!=null && musicBound && musicService.isPlaying())
+            return musicService.getPosn();
         else return 0;
     }
 
     @Override
     public int getDuration() {
-        if(musicSrv!=null && musicBound && musicSrv.isPng())
-            return musicSrv.getDur();
+        if(musicService!=null && musicBound && musicService.isPlaying())
+            return musicService.getDur();
         else return 0;
     }
 
     @Override
     public boolean isPlaying() {
-        if(musicSrv!=null && musicBound)
-            return musicSrv.isPng();
+        if(musicService!=null && musicBound)
+            return musicService.isPlaying();
         return false;
     }
 
     @Override
     public void pause() {
         playbackPaused=true;
-        musicSrv.pausePlayer();
+        musicService.pausePlayer();
     }
 
     @Override
     public void seekTo(int pos) {
-        musicSrv.seek(pos);
+//        musicService.seek(pos);
     }
 
     @Override
     public void start() {
-        musicSrv.go();
+        musicService.go();
     }
 
     //set the controller up
@@ -234,7 +234,7 @@ public class LocalMusicActivity extends AppCompatActivity implements MediaContro
     }
 
     private void playNext(){
-        musicSrv.playNext();
+        musicService.playNext();
         if(playbackPaused){
             setController();
             playbackPaused=false;
@@ -243,7 +243,7 @@ public class LocalMusicActivity extends AppCompatActivity implements MediaContro
     }
 
     private void playPrev(){
-        musicSrv.playPrev();
+        musicService.playPrev();
         if(playbackPaused){
             setController();
             playbackPaused=false;
@@ -275,7 +275,7 @@ public class LocalMusicActivity extends AppCompatActivity implements MediaContro
     @Override
     protected void onDestroy() {
         stopService(playIntent);
-        musicSrv=null;
+        musicService=null;
         super.onDestroy();
     }
 }

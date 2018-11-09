@@ -9,6 +9,7 @@ public class Song {
     private long id;
     private String title;
     private String patch;
+    private int duration;
 
     public Song(long id, String title, String patch) {
         this.id = id;
@@ -26,5 +27,13 @@ public class Song {
 
     public String getPatch() {
         return patch;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }

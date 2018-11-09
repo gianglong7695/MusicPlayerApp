@@ -4,11 +4,9 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,9 +18,7 @@ import app.dg.giang.dgplayer.utils.Logs;
  * Skype: gianglong7695@gmail.com (id: gianglong7695_1)
  * Phone: 0979 579 283
  */
-public class MusicService extends Service implements
-        MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener,
-        MediaPlayer.OnCompletionListener {
+public class MusicService extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
 
 
     //media player
@@ -42,7 +38,6 @@ public class MusicService extends Service implements
     private Random rand;
 
     private MusicController controller;
-
 
 
     public void onCreate() {
@@ -72,6 +67,11 @@ public class MusicService extends Service implements
         player.setOnPreparedListener(this);
         player.setOnCompletionListener(this);
         player.setOnErrorListener(this);
+//        player.setOn
+    }
+
+    public Song getPlayingSong(){
+        return songs.get(currentSongPos);
     }
 
     //pass song list
@@ -92,42 +92,34 @@ public class MusicService extends Service implements
         return musicBind;
     }
 
-//    //release resources when unbind
+    //    //release resources when unbind
     @Override
-    public boolean onUnbind(Intent intent){
+    public boolean onUnbind(Intent intent) {
         player.stop();
         player.release();
         return false;
     }
 
-    //play a song
     public void playSong() {
         try {
-            //play
             player.reset();
-            //get song
             Song playSong = songs.get(currentSongPos);
-            //get title
             songTitle = playSong.getTitle();
-
-//            Uri mUri = Uri.parse(playSong.getPatch());
-//            player.setDataSource(getApplicationContext(), mUri);
             player.setDataSource(playSong.getPatch());
             player.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
             player.prepareAsync();
+
+
+
 
         } catch (Exception e) {
             Logs.e(e);
         }
 
 
-        if(controller != null){
-            controller.onMusicPlay();
-        }
     }
 
-    //set the song
     public void setSongIndex(int songIndex) {
         currentSongPos = songIndex;
     }
@@ -169,8 +161,9 @@ public class MusicService extends Service implements
 //        Notification not = builder.build();
 //        startForeground(NOTIFY_ID, not);
 
-
-
+        if (controller != null) {
+            controller.onMusicPlay(currentSongPos);
+        }
     }
 
     //playback methods
@@ -182,23 +175,23 @@ public class MusicService extends Service implements
         return player.getDuration();
     }
 
-    public boolean isPng() {
+
+    public int getCurrentDuration() {
+        return player.getCurrentPosition();
+    }
+
+    public boolean isPlaying() {
         return player.isPlaying();
     }
 
     public void pausePlayer() {
+        if (player == null) return;
         player.pause();
-        if(controller != null){
+        if (controller != null) {
             controller.onMusicPause();
         }
     }
 
-    public void seek(int posn) {
-        player.seekTo(posn);
-        if(controller != null){
-            controller.seekTo(posn);
-        }
-    }
 
     public void go() {
         player.start();
